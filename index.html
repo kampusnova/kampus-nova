@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Il programma di Kampus Nova per i Dipartimenti dell'Università Kore di Enna.">
+<meta property="og:title" content="Kampus Nova">
+<meta property="og:description" content="Il programma di Kampus Nova per i Dipartimenti dell'Università Kore di Enna.">
+<meta property="og:image" content="hero.jpg">
+<link rel="icon" type="image/png" href="logo.png">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+<title>Kampus Nova</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
+<style>
+/* Layout: one-page a card Bento, griglia a 3 colonne che diventa una colonna su telefono; due viste (Home / Chi siamo) via hash */
+:root{
+  --paper:#F3F3F3; --sage:#B5C1B7; --moss:#3B3E37; --ink:#0D0D0D; --white:#FAFAF8; --line:#D6D9D4;
+  --display:"Bricolage Grotesque","Inter",system-ui,sans-serif;
+  --body:"DM Sans","Inter",system-ui,sans-serif;
+  --r:28px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 40px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+.wrap{max-width:1120px;margin:0 auto}
+h1,h2,h3,.num{font-family:var(--display);font-weight:800;letter-spacing:-.035em;line-height:.95;margin:0;text-wrap:balance}
+p{margin:0}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:3px solid var(--moss);outline-offset:3px}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);display:flex;justify-content:space-between;align-items:center;padding-block:12px}
+.top img{width:40px;height:40px;border-radius:50%;display:block;border:1px solid var(--line)}
+.nav{display:flex;gap:4px;background:var(--sage);border-radius:999px;padding:4px}
+.nav a{text-decoration:none;font-weight:700;font-size:13px;padding:8px 16px;border-radius:999px}
+.nav a[aria-current="page"]{background:var(--moss);color:var(--white)}
+
+/* hero */
+.hero{position:relative;border-radius:var(--r);overflow:hidden;min-height:clamp(420px,62vw,640px);display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(24px,5vw,56px);color:var(--white)}
+.hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% 40%}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,13,13,0) 0%,rgba(13,13,13,.16) 40%,rgba(13,13,13,.66) 100%),linear-gradient(90deg,rgba(13,13,13,.32) 0%,rgba(13,13,13,0) 60%)}
+.hero>img{filter:brightness(1.08) saturate(1.05)}
+.word,.pills span{text-shadow:0 2px 24px rgba(13,13,13,.45)}
+.pills span{background:rgba(13,13,13,.35);backdrop-filter:blur(4px)}
+.hero>*:not(img){position:relative;z-index:1}
+.word{font-family:var(--display);font-weight:800;letter-spacing:-.05em;line-height:.86;font-size:clamp(64px,15vw,168px);margin:0}
+.word .o{display:inline-block;width:.74em;height:.74em;border-radius:50%;background:var(--white);vertical-align:-.03em;margin:0 .02em;overflow:hidden}
+.word .o img{width:100%;height:100%;display:block}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.pills span{border:1.5px solid rgba(250,250,248,.85);border-radius:999px;padding:6px 14px;font-size:11px;font-weight:700;letter-spacing:.14em}
+
+/* programma intro */
+.intro{display:grid;grid-template-columns:1.65fr 1fr;gap:12px;margin-top:48px}
+.intro .card{background:var(--sage);border-radius:var(--r);padding:clamp(28px,5vw,56px);display:flex;flex-direction:column;justify-content:center;gap:24px}
+.intro h1{font-size:clamp(40px,6vw,68px)}
+.intro .card p{font-weight:500}
+.intro .ph{border-radius:var(--r);overflow:hidden;min-height:260px}
+.intro .ph img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* dipartimenti */
+.dept{margin-top:clamp(56px,8vw,96px)}
+.dept h2{font-size:clamp(38px,6vw,64px);max-width:16ch}
+.dept .sub{font-weight:700;font-size:13px;margin-top:14px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:28px}
+.c{border-radius:var(--r);padding:clamp(22px,2.6vw,32px);display:flex;flex-direction:column;gap:12px;min-width:0}
+.c.s{background:var(--sage)} .c.d{background:var(--moss);color:var(--white)} .c.w{background:var(--paper);border:1.5px solid var(--line)}
+.c.wide{grid-column:span 2}
+.c .num{font-size:clamp(48px,5vw,64px);margin-bottom:clamp(16px,3vw,36px)}
+.c h3{font-size:22px;letter-spacing:-.025em;line-height:1.05}
+.c p,.c li{font-size:14px;line-height:1.5}
+.c .lbl{font-weight:700;margin-top:4px}
+.c ul{margin:0;padding-left:18px;display:grid;gap:4px}
+.c .sub-t{font-weight:700}
+
+
+/* gallerie foto dei dipartimenti: bento su desktop, prima foto larga + coppie su telefono */
+.gal{display:grid;gap:12px;margin-top:28px}
+.gal figure{position:relative;margin:0;border-radius:var(--r);overflow:hidden;background:var(--line);min-height:0;max-width:100%}
+.gal img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.gal.n1 figure{aspect-ratio:21/9}
+@media (min-width:821px){
+  .gal.n3{grid-template-columns:1.6fr 1fr;grid-template-rows:230px 230px}
+  .gal.n3 figure:first-child{grid-row:span 2}
+  .gal.n4{grid-template-columns:1.7fr 1fr;grid-template-rows:300px 260px;grid-template-areas:"a b" "d c"}
+  .gal.n4 figure:nth-child(1){grid-area:a}.gal.n4 figure:nth-child(2){grid-area:b}
+  .gal.n4 figure:nth-child(3){grid-area:c}.gal.n4 figure:nth-child(4){grid-area:d}
+}
+@media (max-width:820px){
+  .gal.n3,.gal.n4{grid-template-columns:1fr 1fr}
+  .gal.n3 figure,.gal.n4 figure{aspect-ratio:1/1}
+  .gal.n3 figure:first-child,.gal.n4 figure:first-child,.gal.n4 figure:last-child{grid-column:1/-1;aspect-ratio:16/9}
+  .gal.n1 figure{aspect-ratio:16/10}
+}
+
+/* cta */
+.cta{margin-top:clamp(56px,8vw,96px);display:grid;gap:12px}
+.cta .ph{border-radius:var(--r);overflow:hidden;aspect-ratio:3/1;max-width:100%}
+.cta .ph img{width:100%;height:100%;object-fit:cover;object-position:50% 42%;display:block}
+.cta .box{background:var(--moss);color:var(--white);border-radius:var(--r);padding:clamp(28px,5vw,56px);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:24px}
+.cta h2{font-size:clamp(40px,6vw,72px)}
+.ig{background:var(--sage);color:var(--ink);text-decoration:none;font-weight:700;border-radius:999px;padding:14px 26px;font-size:15px}
+
+/* chi siamo */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pc{position:relative;border-radius:var(--r);overflow:hidden;min-height:520px;color:var(--white);display:flex;flex-direction:column;justify-content:space-between;padding:clamp(24px,3.4vw,40px)}
+.pc>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pc::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,13,13,.42) 0%,rgba(13,13,13,.12) 38%,rgba(13,13,13,.2) 55%,rgba(13,13,13,.88) 100%)}
+.pc h1{text-shadow:0 2px 24px rgba(13,13,13,.35)}
+.pc>*:not(img){position:relative;z-index:1}
+.pc h1{font-size:clamp(48px,6.5vw,80px)}
+.pc .k{font-family:var(--display);font-weight:800;font-size:20px;letter-spacing:-.02em;text-transform:uppercase;margin-bottom:12px}
+.pc p{font-size:16px;max-width:46ch}
+.band{background:var(--sage);border-radius:var(--r);padding:clamp(28px,5vw,64px);margin-top:12px}
+.band h2{font-size:clamp(38px,6vw,68px)}
+.vals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:36px}
+.v{background:var(--moss);color:var(--white);border-radius:var(--r);padding:28px;min-height:340px;display:flex;flex-direction:column;justify-content:space-between;gap:40px}
+.v h3{font-size:19px;letter-spacing:-.01em;line-height:1.15;text-transform:uppercase;font-weight:700}
+.v p{font-size:15px}
+.logo-story{display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(28px,5vw,64px);align-items:center}
+.logo-story .txt{display:grid;gap:16px;margin-top:28px;max-width:52ch}
+.logo-story img{width:100%;max-width:420px;aspect-ratio:1;justify-self:center;border-radius:50%}
+
+footer{text-align:center;font-size:13px;color:var(--moss);margin-top:40px}
+
+@media (max-width:820px){
+  .intro,.duo,.logo-story{grid-template-columns:1fr}
+  .grid,.vals{grid-template-columns:1fr}
+  .c.wide{grid-column:auto}
+  .pc{min-height:440px}
+  .v{min-height:0}
+  .cta .ph{aspect-ratio:16/9}
+  .logo-story img{max-width:280px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="top">
+    <a href="#home" aria-label="Kampus Nova, torna alla Home"><img src="logo.png" alt="Logo Kampus Nova"></a>
+    <nav class="nav" aria-label="Pagine">
+      <a href="#home" data-view="home">Home</a>
+      <a href="#chi-siamo" data-view="chi-siamo">Chi siamo</a>
+    </nav>
+  </header>
+
+  <main id="view-home">
+    <section class="hero">
+      <img src="hero.jpg" alt="Studenti in piazza davanti alla Biblioteca di Ateneo dell'Università Kore di Enna">
+      <h1 class="word" aria-label="Kampus Nova">KAMPUS<br>N<span class="o"><img src="logo.png" alt=""></span>VA</h1>
+      <div class="pills"><span>RADICI</span><span>COMUNITÀ</span><span>FUTURO</span></div>
+    </section>
+
+    <section class="intro">
+      <div class="card">
+        <h1>Il nostro programma per i Dipartimenti</h1>
+        <p>Scopri le nostre proposte per i Dipartimenti</p>
+      </div>
+      <div class="ph"><img src="programma.jpg" alt="Studenti sulla scala elicoidale della Biblioteca di Ateneo, vista dall'alto"></div>
+    </section>
+
+    <div id="depts"></div>
+    <div class="cta-slot"></div>
+  </main>
+
+  <main id="view-chi-siamo" hidden>
+    <section class="duo">
+      <article class="pc">
+        <img src="chisiamo.jpg" alt="Un gruppo di studenti seduti sulle scale dell'università" style="object-position:50% 50%">
+        <h1>Chi siamo</h1>
+        <div><p class="k">La nostra storia</p><p>Kampus Nova nasce dall’evoluzione di Kampus, un’associazione studentesca che negli anni ha rappresentato con impegno e conoscenza la voce degli studenti all’interno dell’università.</p></div>
+      </article>
+      <article class="pc">
+        <img src="cosafacciamo.jpg" alt="Aula magna dell'Università Kore di Enna">
+        <h1>Cosa facciamo</h1>
+        <div><p class="k">La nostra missione</p><p>La nostra missione è rappresentare, ascoltare e valorizzare gli studenti, portando le loro esigenze negli spazi decisionali dell’università.</p></div>
+      </article>
+    </section>
+
+    <section class="band">
+      <h2>I nostri valori sono le nostre radici</h2>
+      <div class="vals">
+        <div class="v"><h3>Prima la comunità</h3><p>Crediamo nella collaborazione e nel supporto reciproco. Per noi il successo non è individuale: cresce quando tutta la comunità studentesca cresce insieme.</p></div>
+        <div class="v"><h3>Responsabilità e impegno</h3><p>Ci assumiamo la responsabilità delle idee che proponiamo e delle decisioni che prendiamo, lavorando con serietà per migliorare concretamente la vita universitaria.</p></div>
+        <div class="v"><h3>Trasparenza e partecipazione</h3><p>Crediamo in una rappresentanza aperta e trasparente. Ascoltiamo gli studenti e promuoviamo il dialogo per costruire insieme le scelte che riguardano la nostra università.</p></div>
+      </div>
+    </section>
+
+    <section class="band logo-story">
+      <div>
+        <h2>La storia del logo</h2>
+        <div class="txt">
+          <p>Il logo di <b>Kampus Nova</b> nasce da un simbolo che racconta la nostra identità: <b>l’albero</b>, simbolo di crescita, solidità e comunità.</p>
+          <p>Le <b>radici</b> raccontano la nostra storia e il percorso costruito negli anni come Kampus.</p>
+          <p>Il <b>tronco</b> rappresenta la nostra identità e la nostra presenza all’interno dell’università.</p>
+          <p>I <b>rami</b> guardano al futuro e alle nuove opportunità per gli studenti.</p>
+          <p>Il <b>verde</b> simboleggia crescita ed equilibrio.</p>
+          <p><b>Nova</b> come nuova luce, verso il futuro.</p>
+        </div>
+      </div>
+      <img src="logo.png" alt="Logo Kampus Nova: un albero con rami e radici">
+    </section>
+
+    <div class="cta-slot"></div>
+  </main>
+
+  <footer>Kampus Nova · Università Kore di Enna</footer>
+</div>
+
+<template id="cta-tpl">
+  <section class="cta">
+    <div class="ph"><img src="cta.jpg" alt="Studenti in piazza davanti all'edificio principale dell'Università Kore di Enna"></div>
+    <div class="box">
+      <h2>Suggerimenti?<br>Domande? Scrivici!</h2>
+      <a class="ig" href="https://www.instagram.com/kampus_nova/" target="_blank" rel="noopener">@kampus_nova</a>
+    </div>
+  </section>
+</template>
+
+<script>
+// Ogni card: [titolo, testo, proposte(lista), frase finale]
+const P = "La nostra proposta:";
+const D = [
+ {t:"Dipartimento di Medicina e Chirurgia", wide:true, ph:[["me3.jpg","Vista aerea della Facoltà di Medicina e Chirurgia UKE"],["me1.jpg","Studenti di Medicina in camice davanti alla facoltà"],["me2.jpg","Laboratorio di anatomia con modello del corpo umano"]], c:[
+  {h:"Terzo appello di aprile", p:"Da anni gli studenti richiedono un appello nel mese di aprile accessibile a tutte le materie.", lbl:P, ul:["rendere aprile una sessione ordinaria di esami","permettere l’accesso a tutte le discipline","eliminare limitazioni legate a percentuali di superamento o propedeuticità","offrire agli studenti un appello in più durante l’anno"]},
+  {h:"Ripristino del servizio navetta per i tirocini", p:"La soppressione del servizio navetta verso le sedi ospedaliere di tirocinio ha creato difficoltà organizzative ed economiche per molti studenti.", lbl:P, ul:["ripristino del servizio navetta verso le sedi di tirocinio, in particolare Catania","organizzazione delle corse in base agli orari dei tirocinio","ampliamento dei collegamenti con le sedi ospedaliere convenzionate","attivazione di agevolazioni per il trasporto degli studenti"], end:"Per garantire a tutti gli studenti pari opportunità nell'accesso alla formazione clinica."},
+  {h:"Calendario pubblicato ad inizio anno", p:"Spesso il calendario di lezioni ed esami viene pubblicato con poco anticipo.", lbl:P, ul:["pubblicazione del calendario completo a settembre","programmazione anticipata di lezioni, sessioni e appelli","riduzione delle sovrapposizioni tra attività"]},
+  {h:"Sportello digitale tirocini", p:"Le richieste di tirocinio vengono gestite tramite e-mail da una commissione di docenti.", lbl:P, ul:["creazione di uno sportello digitale per i tirocini","possibilità di inviare e monitorare le richieste online","maggiore trasparenza nella gestione delle pratiche"]},
+  {h:"Ampliamento Erasmus", p:"Le opportunità di mobilità internazionale sono ancora limitate.", lbl:P, ul:["nuove convenzioni con università estere","aumento delle opportunità Erasmus per gli studenti","revisione dei requisiti linguistici richiesti","allineamento agli standard europei (livello B1)"]},
+  {h:"Ampliamento convenzioni ospedaliere", p:"In alcune strutture il numero elevato di tirocinanti rende difficile seguire adeguatamente le attività pratiche.", lbl:P, ul:["attivare nuove convenzioni con strutture sanitarie","distribuire meglio gli studenti tra le sedi di tirocinio","ridurre il sovraffollamento nei reparti"]},
+  {h:"Nuovo sistema di prenotazione tirocini", p:"Attualmente il link di prenotazione viene inviato contemporaneamente a tutti gli anni interessati.", lbl:P, ul:["finestre di prenotazione differenziate per anno di corso","eliminazione dei tirocini durante la sessione d’esami","preavviso ufficiale prima dell’invio del link"]}
+ ]},
+ {t:"Dipartimento di Ingegneria e Architettura", ph:[["in2.jpg","Incontro con gli studenti all'accademia M.A.R.T.A., accanto al simulatore di volo"],["in1.jpg","Cabina di pilotaggio del simulatore di volo"],["ar1.jpg","Studentesse di Architettura al lavoro su un plastico"],["ar2.jpg","Gruppo di studenti di Architettura con il loro modello"]], c:[
+  {h:"Hackathon annuale di Ingegneria", p:"Organizzazione di un Hackathon universitario dove studenti di ingegneria, architettura e tecnologie ambientali lavoreranno in team per sviluppare soluzioni innovative su:", ul:["smart city e pianificazione urbana","mobilità intelligente e infrastrutture","energie rinnovabili ed efficienza energetica","tutela dell’ambiente e gestione delle risorse","intelligenza artificiale e cybersecurity","tecnologie aerospaziali"], end:"I migliori progetti potranno ottenere premi, borse di studio e opportunità di stage."},
+  {h:"Laboratorio di Stampa 3D e Prototipazione – Spazio Maker", p:"Creazione di un laboratorio di prototipazione e stampa 3D dove gli studenti potranno:", ul:["realizzare modelli architettonici e plastici","sviluppare prototipi ingegneristici","stampare componenti utili per progetti, esami e tesi"], end:"Uno spazio per trasformare le idee in progetti concreti."},
+  {h:"Software e licenze professionali per gli studenti", p:"Promozione di convenzioni universitarie per permettere agli studenti di accedere gratuitamente o a costi ridotti ai principali software professionali, tra cui:", ul:["Matlab e Simulink","piattaforme di AI e machine learning (TensorFlow, PyTorch)","software per analisi energetica e ambientale"], end:"Per permettere agli studenti di utilizzare gli stessi strumenti del mondo del lavoro."},
+  {h:"Career Day Ingegneria", p:"Organizzazione di un Career Day annuale dedicato agli studenti del dipartimento, con la partecipazione di:", ul:["aziende tecnologiche e informatiche","imprese di ingegneria e costruzioni","studi di progettazione e architettura"], end:"Un’occasione per incontrare aziende, professionisti e nuove opportunità di carriera."}
+ ]},
+ {t:"Dipartimento di Scienze Economiche e Giuridiche", ph:[["eg1.jpg","Una studentessa interviene dal podio dell'Università Kore"]], c:[
+  {h:"Terzo appello ordinario", p:"Introduzione di un 3° appello per offrire agli studenti maggiori possibilità di sostenere gli esami durante l’anno accademico."},
+  {h:"Convenzione con il Festival del Management", p:"Attivazione di convenzioni con il Festival del Management per favorire la partecipazione degli studenti a eventi di formazione, networking e confronto con il mondo dell’impresa."},
+  {h:"Migliore organizzazione degli esami scritti e orali", p:"Programmazione più coordinata tra prove scritte e orali per evitare sovrapposizioni con altri appelli e permettere agli studenti di sostenere gli esami con maggiore serenità."},
+  {h:"Laboratori di pratica giuridica e simulazioni processuali", p:"Attivazione di laboratori pratici per Giurisprudenza con:", ul:["simulazioni di udienze","redazione di atti giuridici","discussioni processuali"], end:"Per affiancare allo studio teorico esperienze pratiche delle professioni legali."},
+  {h:"Incontri con professionisti", p:"Organizzazione di incontri con avvocati, magistrati, notai, commercialisti, manager e funzionari pubblici per conoscere da vicino le opportunità professionali."},
+  {h:"Simulazioni d’impresa e Business Project", p:"Attività di simulazione d’impresa per gli studenti di Economia, con sviluppo di:", ul:["modelli di business","strategie di marketing","analisi dei mercati","pianificazione economico-finanziaria."]}
+ ]},
+ {t:"Dipartimento di Studi classici, linguistici e della formazione", wide:true, ph:[["sc1.jpg","Docenti e studenti durante un laboratorio con un robot educativo"]], c:[
+  {h:"Possibilità di rifiutare i voti degli esami scritti", p:"Introduzione della possibilità di rifiutare il voto delle prove scritte, per permettere agli studenti di migliorare il risultato e sostenere nuovamente l’esame."},
+  {h:"Calendarizzazione dei seminari", p:"Pubblicazione del calendario dei seminari all’inizio di ogni semestre, per consentire agli studenti di organizzarsi con anticipo."},
+  {h:"Riqualificazione degli spazi verdi universitari"},
+  {h:"Innovazione e digitalizzazione dei servizi", parts:[["Portale Unico Centralizzato:","Sviluppo di una piattaforma digitale integrata che raccolga tutti i servizi universitari in un unico punto di accesso."],["Notifiche in Tempo Reale:","Introduzione di un sistema di avvisi tempestivi per scadenze amministrative, appelli d'esame, pubblicazione dei voti e comunicazioni urgenti dai corsi di studio."]]},
+  {h:"Comunicazione e comunità universitaria", parts:[["Podcast d'Ateneo:","Creazione di una serie di podcast ufficiali realizzati in collaborazione tra studenti e docenti, per approfondire temi di studio, raccontare la ricerca universitaria, condividere storie ed esperienze con il fine di rafforzare il dialogo all'intersezione tra le diverse generazioni."]]},
+  {h:"Maggiore internazionalizzazione", p:"Potenziamento delle opportunità di mobilità internazionale ed Erasmus."},
+  {h:"Incontri con enti e realtà del territorio", p:"Organizzazione di incontri con scuole, enti e agenzie per avvicinare gli studenti al mondo del lavoro."}
+ ]},
+ {t:"Scienze dell’Uomo e della Società", ph:[["su1.jpg","Una studentessa sceglie un libro in biblioteca"]], c:[
+  {h:"Terzo appello ordinario", p:"Introduzione di un terzo appello per aumentare le possibilità di sostenere gli esami durante l’anno accademico."},
+  {h:"Simulazioni professionali – Clinical & Social Lab", p:"Organizzazione di attività pratiche per preparare gli studenti alle situazioni professionali.", ul:["simulazioni di colloqui psicologici","progettazione di programmi di allenamento","gestione di casi clinici simulati"]},
+  {h:"Career Day del Dipartimento", p:"Incontri di orientamento con professionisti dei settori di psicologia, sport e benessere.", ul:["percorsi per diventare psicologo o psicoterapeuta","opportunità nel settore sportivo e fitness"]},
+  {h:"Preparazione all’Esame di Stato", p:"Programma di supporto per l’esame di abilitazione.", ul:["simulazioni delle prove","incontri con professionisti"]},
+  {h:"Workshop su carriera e professioni", p:"Incontri pratici dedicati all’avvio della carriera.", ul:["apertura di uno studio professionale","opportunità nello sport, fitness e settore sociale"]}
+ ]}
+];
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+const tones = ["s","d","w"];
+document.getElementById("depts").innerHTML = D.map(dep => `
+  <section class="dept">
+    <h2>${esc(dep.t)}</h2>
+    <p class="sub">Le proposte di Kampus Nova</p>
+    ${dep.ph?`<div class="gal n${dep.ph.length}">${dep.ph.map(x=>`<figure><img src="${x[0]}" alt="${x[1].replace(/"/g,"&quot;")}" loading="lazy"></figure>`).join("")}</div>`:""}
+    <div class="grid">${dep.c.map((c,i)=>`
+      <article class="c ${tones[i%3]}${dep.wide&&i===0?" wide":""}">
+        <span class="num">${String(i+1).padStart(2,"0")}</span>
+        <h3>${esc(c.h)}</h3>
+        ${c.p?`<p>${esc(c.p)}</p>`:""}
+        ${(c.parts||[]).map(x=>`<p><span class="sub-t">${esc(x[0])}</span> ${esc(x[1])}</p>`).join("")}
+        ${c.lbl?`<p class="lbl">${c.lbl}</p>`:""}
+        ${c.ul?`<ul>${c.ul.map(li=>`<li>${esc(li)}</li>`).join("")}</ul>`:""}
+        ${c.end?`<p>${esc(c.end)}</p>`:""}
+      </article>`).join("")}
+    </div>
+  </section>`).join("");
+
+const tpl = document.getElementById("cta-tpl");
+document.querySelectorAll(".cta-slot").forEach(s => s.replaceWith(tpl.content.cloneNode(true)));
+
+function show(){
+  const v = location.hash === "#chi-siamo" ? "chi-siamo" : "home";
+  document.getElementById("view-home").hidden = v !== "home";
+  document.getElementById("view-chi-siamo").hidden = v !== "chi-siamo";
+  document.querySelectorAll(".nav a").forEach(a => { if (a.dataset.view === v) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
+  window.scrollTo(0,0);
+}
+addEventListener("hashchange", show);
+show();
+</script>
+
+</body>
+</html>
