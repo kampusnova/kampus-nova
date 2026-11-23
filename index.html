@@ -136,6 +136,33 @@ footer{text-align:center;font-size:13px;color:var(--moss);margin-top:40px}
   .logo-story img{max-width:280px}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* ===== animazioni ===== */
+@keyframes up{from{transform:translateY(105%)}to{transform:none}}
+@keyframes pop{0%{transform:scale(.2) rotate(-120deg);opacity:0}70%{transform:scale(1.08) rotate(8deg);opacity:1}100%{transform:none;opacity:1}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes zoomOut{from{transform:scale(1.12)}to{transform:scale(1)}}
+@keyframes viewIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.word .ln{display:block;overflow:hidden;padding-bottom:.04em}
+.word .ch{display:inline-block;animation:up .8s cubic-bezier(.2,.8,.2,1) both}
+.word .o{animation:pop 1s cubic-bezier(.2,.8,.2,1) .55s both}
+.pills span{animation:fadeUp .6s ease both}
+.pills span:nth-child(1){animation-delay:.9s}.pills span:nth-child(2){animation-delay:1.02s}.pills span:nth-child(3){animation-delay:1.14s}
+.hero>img{animation:zoomOut 1.8s cubic-bezier(.2,.8,.2,1) both;will-change:transform}
+.anim .rv{opacity:0;transform:translateY(34px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.anim .rv.in{opacity:1;transform:none}
+.gal figure img{transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.gal figure:hover img{transform:scale(1.06)}
+.c{transition:transform .35s ease}
+@media (hover:hover){.c:hover{transform:translateY(-6px)}}
+.ig,.nav a{transition:transform .2s ease,background-color .2s ease}
+.ig:active,.nav a:active{transform:scale(.95)}
+main.view-in{animation:viewIn .45s ease both}
+@media (prefers-reduced-motion:reduce){
+  .word .ch,.word .o,.pills span,.hero>img,main.view-in{animation:none!important}
+  .anim .rv{opacity:1!important;transform:none!important;transition:none!important}
+  .gal figure img,.c{transition:none!important}
+}
 </style>
 </head>
 <body>
@@ -303,6 +330,41 @@ function show(){
 }
 addEventListener("hashchange", show);
 show();
+
+// ===== animazioni =====
+(function(){
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // hero: lettere
+  const h = document.querySelector(".word");
+  const logo = h.querySelector(".o");
+  const mk = (txt, start) => [...txt].map((c,i)=>`<span class="ch" style="animation-delay:${(start+i)*0.05}s">${c}</span>`).join("");
+  h.innerHTML = `<span class="ln">${mk("KAMPUS",0)}</span><span class="ln">${mk("N",6)}<span class="o-slot"></span>${mk("VA",8)}</span>`;
+  h.querySelector(".o-slot").replaceWith(logo);
+  if (reduce) return;
+  // parallasse hero
+  const himg = document.querySelector(".hero>img");
+  let tick=false;
+  addEventListener("scroll",()=>{ if(tick) return; tick=true; requestAnimationFrame(()=>{ const y=Math.min(scrollY,700); himg.style.translate=`0 ${y*0.25}px`; tick=false; }); },{passive:true});
+  // comparsa allo scroll
+  if (!("IntersectionObserver" in window)) return;
+  document.documentElement.classList.add("anim");
+  const els=[...document.querySelectorAll(".intro .card,.intro .ph,.dept h2,.dept .sub,.gal figure,.grid .c,.cta .ph,.cta .box,.pc,.band h2,.v,.logo-story .txt p,.logo-story img")];
+  els.forEach(e=>e.classList.add("rv"));
+  // ritardo a cascata dentro ogni gruppo
+  document.querySelectorAll(".grid,.gal,.vals,.txt,.duo").forEach(g=>[...g.children].forEach((c,i)=>c.style.transitionDelay=(i%6)*0.08+"s"));
+  const count = el => {
+    const n = el.querySelector(".num"); if(!n||n.dataset.done) return; n.dataset.done=1;
+    const end=parseInt(n.textContent,10); let k=0; const steps=12;
+    const t=setInterval(()=>{ k++; const v=Math.round(end*k/steps); n.textContent=String(v).padStart(2,"0"); if(k>=steps) clearInterval(t); },40);
+  };
+  const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in"); if(e.target.classList.contains("c")) count(e.target); io.unobserve(e.target);} }),{threshold:.12,rootMargin:"0px 0px -6% 0px"});
+  els.forEach(e=>io.observe(e));
+  // sicurezza: dopo 4 secondi mostra comunque ciò che è già nello schermo o sopra
+  setTimeout(()=>els.forEach(e=>{ if(e.getBoundingClientRect().top < innerHeight) e.classList.add("in"); }),4000);
+  // dissolvenza nel cambio pagina
+  addEventListener("hashchange",()=>{ const m=document.querySelector("main:not([hidden])"); m.classList.remove("view-in"); void m.offsetWidth; m.classList.add("view-in");
+    m.querySelectorAll(".rv:not(.in)").forEach(e=>{ io.observe(e); }); });
+})();
 </script>
 
 </body>
